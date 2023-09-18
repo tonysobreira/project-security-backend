@@ -2,8 +2,13 @@ package com.project.security.payload.response;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder(value = { "token" })
 public class JwtResponse {
 
+	@JsonProperty(value = "accessToken")
 	private String token;
 
 	private String type = "Bearer";
