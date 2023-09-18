@@ -69,7 +69,9 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(),
+				userDetails.getEmail(), roles, userDetails.isAccountNonExpired(), userDetails.isAccountNonLocked(),
+				userDetails.isCredentialsNonExpired(), userDetails.isEnabled()));
 	}
 
 	@PostMapping("/signup")
@@ -111,6 +113,11 @@ public class AuthController {
 				}
 			});
 		}
+
+		user.setAccountNonLocked(Boolean.TRUE);
+		user.setAccountNonExpired(Boolean.TRUE);
+		user.setCredentialsNonExpired(Boolean.TRUE);
+		user.setEnabled(Boolean.TRUE);
 
 		user.setRoles(roles);
 		userRepository.save(user);
